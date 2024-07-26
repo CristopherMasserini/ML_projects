@@ -10,13 +10,30 @@ Using Marketstack API
 """
 import os
 import requests
+import json
 
 
-# os.environ['API_KEY']
-query = {'lat':'45', 'lon':'180'}
-response = requests.get("http://api.open-notify.org/astros.json", params=query)
-# print(response.content)
-# print(response.text)
-print(response.json())
+def get_ticker_info_request():
+    query_market = {'access_key': os.environ['API_KEY']}
+    response = requests.get("http://api.marketstack.com/v1/tickers",
+                            params=query_market)
+
+    return response.json()
 
 
+def get_ticker_info_file(filename: str):
+    with open(f"{filename}", "r") as file:
+        data = json.load(file)
+    print(data['data'])
+
+
+def get_ticker_EOD(symbol: str, day: str):
+    query_market = {'access_key': os.environ['API_KEY'],
+                    'symbols': symbol}
+    response = requests.get(f"http://api.marketstack.com/v1/eod/{day}",
+                            params=query_market)
+
+    return response.json()
+
+
+get_ticker_info_file('ticker_info.json')
