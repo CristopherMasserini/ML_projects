@@ -36,4 +36,12 @@ def get_ticker_EOD(symbol: str, day: str):
     return response.json()
 
 
-get_ticker_info_file('ticker_info.json')
+def get_ticker_names(ticker_info: list):
+    return [info['name'] for info in ticker_info]
+
+
+def get_ticker_prices(ticker):
+    pass
+
+
+# get_ticker_info_file('ticker_info.json')
