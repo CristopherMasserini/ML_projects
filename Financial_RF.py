@@ -24,7 +24,7 @@ def get_ticker_info_request():
 def get_ticker_info_file(filename: str):
     with open(f"{filename}", "r") as file:
         data = json.load(file)
-    print(data['data'])
+    return data['data']
 
 
 def get_ticker_EOD(symbol: str, day: str):
@@ -40,12 +40,24 @@ def get_ticker_names(ticker_info: list):
     return [info['name'] for info in ticker_info]
 
 
+def get_ticker_symbols(ticker_info: list):
+    return [info['symbol'] for info in ticker_info]
+
+
 def get_ticker_prices(ticker_info):
     return ticker_info['data'][0]['close']
 
 
-# get_ticker_info_file('ticker_info.json')
-# print(get_ticker_EOD('MSFT', '2024-07-01'))
-data_test = {'pagination': {'limit': 100, 'offset': 0, 'count': 1, 'total': 1}, 'data': [{'open': 448.61, 'high': 457.37, 'low': 445.66, 'close': 456.73, 'volume': 17545940.0, 'adj_high': 457.37, 'adj_low': 445.66, 'adj_close': 456.73, 'adj_open': 448.66, 'adj_volume': 17662818.0, 'split_factor': 1.0, 'dividend': 0.0, 'symbol': 'MSFT', 'exchange': 'XNAS', 'date': '2024-07-01T00:00:00+0000'}]}
+def get_all_ticker_closed(day):
+    ticker_list = get_ticker_info_file('ticker_info.json')
+    all_tickers = get_ticker_symbols(ticker_list)
+    for ticker in all_tickers:
+        pass
 
-print(get_ticker_prices(data_test))
+
+
+get_ticker_info_file('ticker_info.json')
+# print(get_ticker_EOD('MSFT', '2024-07-01'))
+# data_test = {'pagination': {'limit': 100, 'offset': 0, 'count': 1, 'total': 1}, 'data': [{'open': 448.61, 'high': 457.37, 'low': 445.66, 'close': 456.73, 'volume': 17545940.0, 'adj_high': 457.37, 'adj_low': 445.66, 'adj_close': 456.73, 'adj_open': 448.66, 'adj_volume': 17662818.0, 'split_factor': 1.0, 'dividend': 0.0, 'symbol': 'MSFT', 'exchange': 'XNAS', 'date': '2024-07-01T00:00:00+0000'}]}
+#
+# print(get_ticker_prices(data_test))
