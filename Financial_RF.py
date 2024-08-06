@@ -48,11 +48,17 @@ def get_ticker_prices(ticker_info):
     return ticker_info['data'][0]['close']
 
 
-def get_all_ticker_closed(day):
+def get_all_ticker_closed(day, tickerPrices_previous=None):
     ticker_list = get_ticker_info_file('ticker_info.json')
     all_tickers = get_ticker_symbols(ticker_list)
+    if not tickerPrices_previous:
+        ticker_prices = {}
+    else:
+        ticker_prices = tickerPrices_previous
     for ticker in all_tickers:
-        pass
+        ticker_info = get_ticker_EOD(ticker, day)
+        price_close = get_ticker_prices(ticker_info)
+        ticker_prices[ticker] = {'day': price_close}
 
 
 
